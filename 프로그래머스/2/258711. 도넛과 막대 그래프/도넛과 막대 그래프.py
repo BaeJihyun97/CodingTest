@@ -20,8 +20,7 @@ def solution(edges):
                 MAX = linkedNode
                 init = i
 
-    # print(graph, isInit)
-    # count graph
+    # solution1: count graph
     type0, type1, type2 = 0, 0, 0 # 막대, 도넛, 팔자
     for i, nodes in enumerate(graph):
         if i != init and i != 0:
@@ -29,24 +28,20 @@ def solution(edges):
                 type2 += 1
             elif len(nodes) == 0:
                 type0 += 1
-    
-    # print(type0, type1, type2)
     type1 = len(graph[init]) - type0 - type2
-    answer = [init, type1, type0, type2]
-    return answer
-
-# 그래프 순회 오류남....
+    
+    # solution2: 그래프 순회
 #     for node in graph[init]:
 #         stack = deque([(init, node)])
 #         flag = False
-        
+
 #         while len(stack) > 0:
 #             currE = stack.pop()
 #             if visited[currE] == True:
 #                 continue
 #             visited[currE] = True
 #             (start, end) = currE
-            
+
 #             if not flag:
 #                 if len(graph[end]) == 2:
 #                     type2 += 1
@@ -54,10 +49,13 @@ def solution(edges):
 #                 elif len(graph[end]) == 0:
 #                     type0 += 1
 #                     flag = True
-                
+
 #             for next_node in graph[end]:
 #                 if not visited[(end, next_node)]:
 #                     stack.append((end, next_node))
 
 #         if not flag:
 #             type1 += 1
+    
+    answer = [init, type1, type0, type2]
+    return answer
