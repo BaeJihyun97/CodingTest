@@ -21,15 +21,13 @@ def dfs(graph, start, nodes):
         timer += 1
         
         for adj_node in graph[curr]:
-            # print(f"현재: {curr}, 자식: {adj_node}")
+
             if not visited[adj_node]:
                 
                 parent[adj_node] = curr
                 stack.append(adj_node)
             else:
                 if parent[curr] != adj_node and visitime[adj_node] < visitime[curr]:
-                    # print(f"현재: {curr}, 자식: {adj_node}, 현재의 부모:{parent[curr]}")
-                    # print({key: value for key, value in enumerate(parent)})
                     simple_cycle += 1
 
     return simple_cycle
@@ -70,32 +68,29 @@ def solution(arrows):
         # 대각선 교점 발생시 교점을 노드로 만들기
         if arrow in [1, 3, 5, 7] and new_edge:
             temp1, temp2 = deepcopy(prev_node), deepcopy(next_node)
-            cal = diagonal[arrow]
-            temp3 = (temp1[0]+cal[0], temp1[1])
-            temp4 = (temp2[0]+cal[1], temp2[1])
+            center = ((temp1[0]+temp2[0]) / 2, (temp1[1]+temp2[1]) / 2)
+            temp3 = (temp1[0]+diagonal[arrow][0], temp1[1])
+            temp4 = (temp2[0]+diagonal[arrow][1], temp2[1])
             
+            if center in nodes.keys():
+                graph[nodes[next_node]].remove(nodes[prev_node])
+                graph[nodes[prev_node]].remove(nodes[next_node])
 
-            if temp3 in nodes.keys() and temp4 in nodes.keys() and nodes[temp4] in graph[nodes[temp3]]:
+            elif temp3 in nodes.keys() and temp4 in nodes.keys() and nodes[temp4] in graph[nodes[temp3]]:
                 t1, t2, t3, t4 = nodes[temp1], nodes[temp2], nodes[temp3], nodes[temp4]
                 answer2 += 1
-                # print("dia", graph, nodes[next_node], nodes[prev_node])
-                
-#                 graph[t3].remove(t4)
-#                 graph[t4].remove(t3)
-#                 graph[t1].remove(t2)
-#                 graph[t2].remove(t1)
-                
-#                 center = ((temp1[0]+temp2[0]) / 2, (temp1[1]+temp2[1]) / 2)
-                
-#                 if center not in nodes.keys():       
-#                     nodes[center] = len(nodes)
-#                     c = nodes[center]
-#                     graph.append([])
 
-#                     graph[c].append(t1); graph[t1].append(c);
-#                     graph[c].append(t2); graph[t2].append(c);
-#                     graph[c].append(t3); graph[t3].append(c);
-#                     graph[c].append(t4); graph[t4].append(c);
+                graph[t3].remove(t4); graph[t4].remove(t3);
+                graph[t1].remove(t2); graph[t2].remove(t1);
+
+                nodes[center] = len(nodes)
+                c = nodes[center]
+                graph.append([])
+
+                graph[c].append(t1); graph[t1].append(c);
+                graph[c].append(t2); graph[t2].append(c);
+                graph[c].append(t3); graph[t3].append(c);
+                graph[c].append(t4); graph[t4].append(c);
                 
                 
 
@@ -103,10 +98,10 @@ def solution(arrows):
         prev_node = next_node
     
     # print(graph)
-    # vertex = len(nodes)
-    # edge = sum([len(g) for g in graph]) // 2
-    # answer = 1 + edge - vertex
+    vertex = len(nodes)
+    edge = sum([len(g) for g in graph]) // 2
+    answer = 1 + edge - vertex
     # answer = dfs(graph, 0, len(nodes))
-    print(answer2)
+    # print(answer2)
         
-    return answer2
+    return answer
