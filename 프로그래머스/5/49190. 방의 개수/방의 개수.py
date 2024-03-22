@@ -98,10 +98,16 @@ def solution(arrows):
         prev_node = next_node
     
     # print(graph)
-    vertex = len(nodes)
-    edge = sum([len(g) for g in graph]) // 2
-    answer = 1 + edge - vertex
-    # answer = dfs(graph, 0, len(nodes))
+    
+    # Euler characteristic
+    # vertex = len(nodes)
+    # edge = sum([len(g) for g in graph]) // 2
+    # answer = 1 + edge - vertex
+    
+    # count simple cycle 
+    answer = dfs(graph, 0, len(nodes))
+    
+    # count cross line and visited node
     # print(answer2)
         
     return answer
