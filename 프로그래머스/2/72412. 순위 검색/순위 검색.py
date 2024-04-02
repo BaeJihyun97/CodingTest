@@ -1,35 +1,27 @@
 from bisect import bisect_left
 
-# def binarySearch(array, value):
-#     start, end = 0, len(array) -1
-#     index = (end + start) // 2
+def binary_search_left(array, value):
+    start, end = 0, len(array)
+    index = (end + start) // 2
     
-#     count = 0
-#     while start < end:
-#         midum = array[index]
-#         if midum == value:
-#             # 값이 중복인 것이 있을 수 있음
-#             while True:
-#                 if index > 0 and array[index-1]==midum: index -= 1
-#                 else: break
-#             break
-#         elif midum > value:
-#             end = index
-#         else: # midum < value
-#             if start == index: # 값이 없을 때 큰 수 중 가장 가까운 수 index 반환
-#                 index += 1
-#                 break
-#             else:
-#                 start = index
-        
-#         index = (end + start) // 2
-#     return index
+    count = 0
+    while start < end:
+        index = (end + start) // 2
+        midum = array[index]
+        # 찾고자 하는 수는 value 보다 작지만 않음 됨
+        if midum < value:
+            start = index+1
+        else: # midum >= value
+            end = index
+
+    return start
             
 
 def find(info_tables, lang, job, career, food, score):
     count = 0
     info_table = info_tables[(lang, job, career, food)]
-    index = bisect_left(info_table, score)
+    # index = bisect_left(info_table, score)
+    index = binary_search_left(info_table, score)
     
     return len(info_table) - index
 
