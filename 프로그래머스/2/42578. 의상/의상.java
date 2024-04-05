@@ -3,7 +3,7 @@ import java.util.Map.Entry;
 
 class Solution {
     public int solution(String[][] clothes) {
-        int answer = 1;
+        int answer = 0;
         
         HashMap<String, Integer> map = new HashMap<>();
         for(String[] cloth: clothes) {
@@ -11,9 +11,9 @@ class Solution {
         }
         
         for(Entry<String, Integer> entry: map.entrySet()) {
-            answer *= entry.getValue()+1;
+            System.out.printf("key: %s, value: %d\n", entry.getKey(), entry.getValue());
         }
         
-        return answer-1;
+        return answer;
     }
 }
