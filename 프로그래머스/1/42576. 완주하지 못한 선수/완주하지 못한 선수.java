@@ -12,6 +12,9 @@ class Solution {
             else {
                 map.put(part, map.get(part)+1);
             }
+            
+            // if 절 안쓰고 가능!
+            // map.put(part, map.getOrDefault(part, 0) + 1);
         }
         
         for(String com: completion) {
