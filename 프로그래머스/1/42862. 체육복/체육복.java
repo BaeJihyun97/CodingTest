@@ -5,24 +5,14 @@ import java.util.stream.Collectors;
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
         int answer = 0;
-        boolean[] exist = new boolean[n];
         HashSet<Integer> lostSet = new HashSet<>(Arrays.stream(lost).boxed().collect(Collectors.toList()));
         HashSet<Integer> reserveSet = new HashSet<>(Arrays.stream(reserve).boxed().collect(Collectors.toList()));
         
         // 본인 체육복 먼저 챙기기
         for (int i=1; i <= n; i++) {
-            if (lostSet.contains(i)) {
-                if(reserveSet.contains(i)) {
-                    exist[i-1] = true;
-                    reserveSet.remove(i);
-                    lostSet.remove(i);
-                }
-                else {
-                    exist[i-1] = false;
-                }
-            }
-            else {
-                exist[i-1] = true;
+            if (lostSet.contains(i) && reserveSet.contains(i)) {
+                reserveSet.remove(i);
+                lostSet.remove(i);
             }
         }
         
@@ -46,3 +36,6 @@ class Solution {
         return n - Math.max(answer, 0);
     }
 }
+    
+    
+    
