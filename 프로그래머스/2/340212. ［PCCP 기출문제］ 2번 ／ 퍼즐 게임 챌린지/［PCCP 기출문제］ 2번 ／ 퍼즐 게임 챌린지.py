@@ -25,12 +25,12 @@ def solution(diffs, times, limit):
         time = calculate(puzzles, answer)
         # print(f"min:{minV}, max:{maxV}, curr:{answer}, time:{time}")
         if time > limit:
-            minV, prev, poss = answer+1, answer, False
+            minV = answer+1
         elif time < limit:
             if minV == maxV:
                 break
             else:
-                maxV, prev, poss = answer, answer, True
+                maxV = answer
         else:
             break
 
