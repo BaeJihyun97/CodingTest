@@ -1,3 +1,5 @@
+# Divide & Conquer
+
 def make_binary(number):
     number_ = ""
     while number > 0:
