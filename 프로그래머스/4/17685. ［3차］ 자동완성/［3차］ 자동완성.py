@@ -9,7 +9,7 @@ class Tree:
             child = curr.getChild(s)
             if child is None:
                 child = Node(s, curr)
-                curr.child.append(child)
+                curr.child[s]=child
             curr.count += 1
             curr = child
         curr.count += 1
@@ -38,12 +38,12 @@ class Node:
     def __init__(self, value, parent=None):
         self.value = value
         self.parent = parent
-        self.child = list()
+        self.child = dict()
         self.count = 0
         
     def getChild(self, value):
-        for c in self.child:
-            if c.value == value:
+        for v, c in self.child.items():
+            if v == value:
                 return c
         return None
         
