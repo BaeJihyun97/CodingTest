@@ -1,3 +1,10 @@
+# 알고리즘: dp
+# 자료구조: list + set
+# 주의: dp가 꼭 배열 형태에 dp[i] = dp[curr] + weight 로 업데이트 할 필요는 없음
+#       이전 단계의 데이터를 저장하고, 다음 단계에서 쓴다!
+#       dp[k] = set(N을 k 번 써서 만들 수 있는 수) 로 하고 k + 1 단계에서 dp[1] ~ dp[k-1] 수들 쓰기
+#       겹치는 건 틈틈히 set 로 써서 중복 줄이기!
+
 from collections import deque
 import heapq
 
