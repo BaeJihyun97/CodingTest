@@ -6,6 +6,7 @@
 
 import heapq
 
+# DFS (state)
 def DFS(curr, tree, info, nxtnodes, stateSet, sheep, wolf, depth):
     if len(nxtnodes) == 0:
         return sheep
@@ -25,7 +26,22 @@ def DFS(curr, tree, info, nxtnodes, stateSet, sheep, wolf, depth):
             maxSheep = max(maxSheep, DFS(nxtset, tree, info, nxtnodes[:i]+nxtnodes[i+1:]+tree[nxt][1], stateSet, nxtsheep, nxtwolf, depth+1))
             
     return maxSheep
+
+# DFS (node)
+def DFS2(tree, info, curr, nxtnodes, sheep, wolf, visited, visitedSet):
+    sheep += info[curr]^1
+    wolf += info[curr]
+    visited.add(curr)
     
+    maxSheep = sheep
+    if sheep > wolf:
+        if frozenset(visited) not in visitedSet:
+            for i, nxt in enumerate(nxtnodes):
+                visitedSet.add(frozenset(visited))
+                maxSheep = max(maxSheep, DFS2(tree, info, nxt, nxtnodes[:i]+nxtnodes[i+1:]+tree[nxt][1], sheep, wolf, visited, visitedSet))
+    
+    visited.remove(curr)
+    return maxSheep
 
 
 def solution(info, edges):
@@ -38,7 +54,8 @@ def solution(info, edges):
         tree[p][1].append(c)
         tree[c][0] = p
 
-    answer = DFS(set(), tree, info, [0], set(), 0, 0, 0)
+    # answer = DFS(set(), tree, info, [0], set(), 0, 0, 0)
+    answer = DFS2(tree, info, 0, tree[0][1], 0, 0, set(), set())
     return answer
         
         
